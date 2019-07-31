@@ -25,7 +25,7 @@ public class ContestService {
     private ContestDao contestDao;
 
     /**
-     * 得到已经升序不过时的比赛信息
+     * 得到已经升序不过时的比赛信息,如果信息过时,则从数据库里面删除
      * @return
      */
     public List<Contest> getCorrectInfo() throws Exception{
@@ -66,7 +66,8 @@ public class ContestService {
         //当前时间字符串，格式：yyyy-MM-dd HH:mm:ss
         String now = DateUtil.now();
         String startTime = contest.getStartTime();
-        if(startTime.compareTo(now) > 0){
+        //startTime大于now
+        if(startTime != null && startTime.compareTo(now) > 0){
             return true;
         }
         return false;

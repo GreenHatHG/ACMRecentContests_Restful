@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  **/
 
 @Data
-@Document
+@Document(collection = "contests")
 public class Contest {
 
     private String oj;

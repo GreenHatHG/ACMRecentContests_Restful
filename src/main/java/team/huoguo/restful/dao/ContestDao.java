@@ -1,7 +1,6 @@
 package team.huoguo.restful.dao;
 
 
-import org.springframework.stereotype.Component;
 import team.huoguo.restful.bean.Contest;
 
 import java.util.List;
