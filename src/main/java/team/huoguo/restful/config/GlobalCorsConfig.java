@@ -25,6 +25,10 @@ public class GlobalCorsConfig implements WebMvcConfigurer {
         CorsConfiguration config = new CorsConfiguration();
         //放行哪些原始域
         config.addAllowedOrigin("https://www.pistachiol.club:8084");
+        config.addAllowedOrigin("https://localhost:8080");
+        config.addAllowedOrigin("http://localhost:8080");
+        config.addAllowedOrigin("https://localhost:8081");
+        config.addAllowedOrigin("http://localhost:8081");
         //是否发送 Cookie
         config.setAllowCredentials(false);
         //放行哪些请求方式
