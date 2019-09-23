@@ -15,6 +15,7 @@ public interface ContestDao {
 
     /**
      * 获得数据库里面所有的数据
+     *
      * @return
      */
     List<Contest> getContests();
@@ -22,6 +23,7 @@ public interface ContestDao {
 
     /**
      * 从数据库删除指定的数据
+     *
      * @param contest
      */
     void deleteOne(Contest contest);

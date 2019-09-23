@@ -26,16 +26,16 @@ public class ContestService {
 
     /**
      * 得到已经升序不过时的比赛信息,如果信息过时,则从数据库里面删除
+     *
      * @return
      */
-    public List<Contest> getCorrectInfo() throws Exception{
+    public List<Contest> getCorrectInfo() throws Exception {
         List<Contest> list = new ArrayList<Contest>();
         contests = contestDao.getContests();
-        for(Contest contest : contests){
-            if(verifyTime(contest)){
+        for (Contest contest : contests) {
+            if (verifyTime(contest)) {
                 list.add(contest);
-            }
-            else{
+            } else {
                 contestDao.deleteOne(contest);
             }
         }
@@ -46,19 +46,20 @@ public class ContestService {
     /**
      * 对items按照开始时间进行排序
      */
-    public void sortContests(List<Contest> list){
+    public void sortContests(List<Contest> list) {
 
-        Collections.sort(list,new Comparator<Contest>() {
+        Collections.sort(list, new Comparator<Contest>() {
 
             @Override
             public int compare(Contest o1, Contest o2) {
-                return o1.getStartTime().compareTo (o2.getStartTime());
+                return o1.getStartTime().compareTo(o2.getStartTime());
             }
         });
     }
 
     /**
      * 判断当前信息是否已经过时
+     *
      * @param contest
      * @return
      */
@@ -67,7 +68,7 @@ public class ContestService {
         String now = DateUtil.now();
         String startTime = contest.getStartTime();
         //startTime大于now
-        if(startTime != null && startTime.compareTo(now) > 0){
+        if (startTime != null && startTime.compareTo(now) > 0) {
             return true;
         }
         return false;
