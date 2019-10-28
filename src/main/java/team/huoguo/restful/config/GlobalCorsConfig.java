@@ -35,7 +35,7 @@ public class GlobalCorsConfig implements WebMvcConfigurer {
         config.addAllowedMethod("GET");
         //2. 添加映射路径
         UrlBasedCorsConfigurationSource corsConfigurationSource = new UrlBasedCorsConfigurationSource();
-        corsConfigurationSource.registerCorsConfiguration("/api/contests",config);
+        corsConfigurationSource.registerCorsConfiguration("/**",config);
         //3. 返回新的CorsFilter
         return new CorsFilter(corsConfigurationSource);
     }

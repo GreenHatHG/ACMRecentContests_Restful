@@ -1,12 +1,11 @@
 package team.huoguo.restful.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import team.huoguo.restful.bean.Contest;
+import team.huoguo.restful.bean.Result;
+import team.huoguo.restful.bean.ResultFactory;
 import team.huoguo.restful.service.ContestService;
 
 import java.util.List;
@@ -18,24 +17,34 @@ import java.util.List;
  **/
 
 @RestController
-@RequestMapping(value = "/api")
-@Api(tags = "比赛信息接口")
+@RequestMapping(value = "/api/v1")
 public class ContestController {
 
     @Autowired
     private ContestService contestService;
 
     @GetMapping("/contests")
-    @ApiOperation(value = "得到符合条件的比赛信息",
-            notes = "得到的比赛信息有oj,比赛名称,开始时间,结束时间,时长,星期,链接")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "获取成功"),
-            @ApiResponse(code = 400, message = "获取失败")
-    })
-    public List<Contest> getContests() throws Exception {
-        List<Contest> list = contestService.getCorrectInfo();
-        System.out.println(list);
-        return list;
+    public Result getContests(){
+        List<Contest> list = null;
+        try{
+            list = contestService.getCorrectInfo();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultFactory.buildFailResult("获取数据异常-->" +e.getMessage());
+        }
+        return ResultFactory.buildSuccessResult(list);
+    }
+
+    @GetMapping("/contests/day")
+    public Result getContestsDay(){
+        MultiValueMap<String, Contest> multiValueMap = null;
+        try{
+            multiValueMap = contestService.getInfoByDay();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultFactory.buildFailResult("获取数据异常-->" +e.getMessage());
+        }
+        return ResultFactory.buildSuccessResult(multiValueMap);
     }
 
 }
