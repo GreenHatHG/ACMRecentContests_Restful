@@ -8,6 +8,7 @@ import team.huoguo.restful.bean.Result;
 import team.huoguo.restful.bean.ResultFactory;
 import team.huoguo.restful.service.ContestService;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -45,6 +46,15 @@ public class ContestController {
             return ResultFactory.buildFailResult("获取数据异常-->" +e.getMessage());
         }
         return ResultFactory.buildSuccessResult(multiValueMap);
+    }
+
+    @GetMapping("/contests/name")
+    public Result getContestByName(@RequestParam @NotNull String name){
+         Contest contest = contestService.getContestByName(name);
+         if(contest == null){
+             return ResultFactory.buildFailResult("未找到相关比赛信息");
+         }
+         return ResultFactory.buildSuccessResult(contest);
     }
 
 }

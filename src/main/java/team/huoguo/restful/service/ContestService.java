@@ -9,7 +9,6 @@ import team.huoguo.restful.bean.Contest;
 import team.huoguo.restful.dao.ContestDao;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -68,6 +67,10 @@ public class ContestService {
             }
         }
         return map;
+    }
+
+    public Contest getContestByName(String name){
+        return contestDao.getContestByName(name);
     }
 
     /**

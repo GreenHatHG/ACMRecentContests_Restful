@@ -1,30 +1,38 @@
 package team.huoguo.restful.dao;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.stereotype.Component;
 import team.huoguo.restful.bean.Contest;
 
 import java.util.List;
 
 /**
- * @description: 对ContestInfo类数据库操作的接口
+ * @description:
  * @author: GreenHatHG
  * @create: 2019-07-20 10:29
  **/
 
-public interface ContestDao {
+@Component
+public class ContestDao{
 
-    /**
-     * 获得数据库里面所有的数据
-     *
-     * @return
-     */
-    List<Contest> getContests();
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
+    public List<Contest> getContests() {
+        return mongoTemplate.findAll(Contest.class);
+    }
 
-    /**
-     * 从数据库删除指定的数据
-     *
-     * @param contest
-     */
-    void deleteOne(Contest contest);
+    public void deleteOne(Contest contest) {
+        Query query = Query.query(Criteria.where("name").is(contest.getName()));
+        mongoTemplate.remove(query, Contest.class);
+    }
+
+    public Contest getContestByName(String name){
+        return mongoTemplate.findOne(new
+                Query(Criteria.where("name").is(name)), Contest.class);
+    }
+
 }
